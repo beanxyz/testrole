@@ -1,0 +1,32 @@
+---
+# tasks file for nginxconfig
+ 
+    - name: Ansible apt install nginx pkg
+      apt:
+        name: nginx
+        state: present
+
+    - name: Copy index files
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+
+    - name: Install firewalld
+      apt:
+        name: firewalld
+        state: present
+
+
+    - name: Start service firewalld, if not started
+      service:
+        name: firewalld
+        state: started
+
+
+    - name: Open port80 
+      firewalld:
+        port: 80/tcp
+        permanent: yes
+        immediate: yes
+        state: enabled
+
